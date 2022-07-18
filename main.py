@@ -26,7 +26,7 @@ def load_yaml():
 def get_page_html(url):
   # make get request to url
   response = requests.get(url)
-  return response
+  return response.content.decode("utf-8")
 
 def get_page_soup(html):
   # parse html
@@ -43,12 +43,13 @@ def write_data_to_csv(data_dict):
   with open("data.csv", "w") as f:
     writer = csv.writer(f)
     # write header
-    writer.writerow(["Company", "Top Heading", "Heading", "Data"])
+    writer.writerow(["Company", "Year", "Top Heading", "Heading", "Data"])
 
     for company_name in data_dict:
-      for top_heading_to_scrape in data_dict[company_name]:
-        for heading in data_dict[company_name][top_heading_to_scrape]:
-          writer.writerow([company_name, top_heading_to_scrape, heading, data_dict[company_name][top_heading_to_scrape][heading]])
+      for year in data_dict[company_name]:
+        for top_heading_to_scrape in data_dict[company_name][year]:
+          for heading in data_dict[company_name][year][top_heading_to_scrape]:
+            writer.writerow([company_name, year, top_heading_to_scrape, heading, data_dict[company_name][year][top_heading_to_scrape][heading]])
 
 
 def main():
@@ -60,13 +61,16 @@ def main():
 
 
   for url in urls:
-  #with open("./CDP_BASF_2021.html", "r") as f:
-    #html = f.read()
+  # testing with open("./CDP_BASF_2021.html", "r") as f:
+  #  html = f.read()
     html = get_page_html(url)
     parsed_html = get_page_soup(html)
 
     # get company name (erste h1 on page)
     company_name = parsed_html.find("h1").text.split("-")[0].strip()
+    year = int(parsed_html.find("h1").text.split(" ")[-1].strip())-1
+
+
 
 
     for top_heading_to_scrape in top_headings_to_scrape:
@@ -87,11 +91,14 @@ def main():
             data_string += span.text
 
           if company_name not in data_dict:
-            data_dict[company_name] = {}
-          if top_heading_to_scrape not in data_dict[company_name]:
-            data_dict[company_name][top_heading_to_scrape] = {}
-          if heading not in data_dict[company_name][top_heading_to_scrape]:
-            data_dict[company_name][top_heading_to_scrape][heading] = data_string
+              data_dict[company_name] = {}
+          if year not in data_dict[company_name]:
+              data_dict[company_name][year] = {}
+          if top_heading_to_scrape not in data_dict[company_name][year]:
+              data_dict[company_name][year][top_heading_to_scrape] = {}
+          if heading not in data_dict[company_name][year][top_heading_to_scrape]:
+            data_dict[company_name][year][top_heading_to_scrape][heading] = data_string
+
 
 
           # data_dict[company_name][top_heading_to_scrape] = {}
