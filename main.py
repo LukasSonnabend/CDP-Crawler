@@ -25,7 +25,7 @@ def load_yaml():
 
 def get_page_html(url):
   # make get request to url
-  response = requests.get("/home/lukas/Downloads/Lukas/CDP_BASF_2021_files/box-1ada912494ba7fc7aca15fcef1c2a7ae.html")
+  response = requests.get(url)
   return response
 
 def get_page_soup(html):
