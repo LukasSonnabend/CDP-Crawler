@@ -84,16 +84,26 @@ def main():
           # go to next div with class "ndp_formatted_response__value"
           data_section = h3.parent.find("section")
           while data_section == None:
-            data_section = h3.parent
-            data_section = data_section.parent.find("section")
-          data_div = data_section.find("div", class_="ndp_formatted_response__value")
+            data_section = h3.parent.nextSibling()
+
+          data_div = None
+          try:
+            data_div = data_section.find("div", class_="ndp_formatted_response__value")
+          except:
+            data_div = data_section[0]
 
           ## hier gibt es mehrere spans
           data_string = ""
 
           if data_div:
-            for span in data_div.find_all("span"):
+            spans = data_div.find_all("span")
+            if len(spans) > 0:
+              for span in spans:
                 data_string += span.text.strip()
+            else:
+              # Handles case where data is sibling of the heading
+              data_string = data_div.text.strip()
+
           else:
             data_string = data_section.find("section", class_="ndp_formatted_response__answer_option").text.strip()
 
@@ -106,9 +116,6 @@ def main():
           if heading not in data_dict[company_name][year][top_heading_to_scrape]:
             data_dict[company_name][year][top_heading_to_scrape][heading] = data_string
 
-
-
-          # data_dict[company_name][top_heading_to_scrape] = {}
   write_data_to_csv(data_dict)
 
 

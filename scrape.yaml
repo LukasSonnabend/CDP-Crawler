@@ -6,8 +6,8 @@ headings_to_scrape:
   (C6.3) What were your organization’s gross global Scope 2 emissions in metric tons CO2e?:
     - Scope 2, location-based
     - Scope 2, market-based (if applicable)
-  # (C6.4a) Provide details of the sources of Scope 1 and Scope 2 emissions that are within your selected reporting boundary which are not included in your disclosure.:
-  #   - Source
+  (C6.4a) Provide details of the sources of Scope 1 and Scope 2 emissions that are within your selected reporting boundary which are not included in your disclosure.:
+    - Source
   Upstream transportation and distribution:
     - Metric tonnes CO2e
     - Evaluation status
