@@ -60,10 +60,11 @@ def main():
   data_dict = {}
 
 
-  for url in urls:
-  # testing with open("./CDP_BASF_2021.html", "r") as f:
-  #  html = f.read()
-    html = get_page_html(url)
+  # for url in urls:
+  # testing
+  with open("./CDP_BASF_2021.html", "r") as f:
+    html = f.read()
+   # html = get_page_html(url)
     parsed_html = get_page_soup(html)
 
     # get company name (erste h1 on page)
@@ -76,19 +77,25 @@ def main():
     for top_heading_to_scrape in top_headings_to_scrape:
         # find Top heading first
         top_heading = parsed_html.find("h3", class_="ndp_formatted_response__header", text=top_heading_to_scrape)
-        correspoding_section = top_heading.next_sibling
+        correspoding_section = top_heading.parent
 
         for heading in top_headings_to_scrape[top_heading_to_scrape]:
-          h3 = parsed_html.find("h3", class_="ndp_formatted_response__header", text=heading)
+          h3 = correspoding_section.find("h3", class_="ndp_formatted_response__header", text=heading)
           # go to next div with class "ndp_formatted_response__value"
           data_section = h3.parent.find("section")
+          while data_section == None:
+            data_section = h3.parent
+            data_section = data_section.parent.find("section")
           data_div = data_section.find("div", class_="ndp_formatted_response__value")
 
           ## hier gibt es mehrere spans
           data_string = ""
 
-          for span in data_div.find_all("span"):
-            data_string += span.text
+          if data_div:
+            for span in data_div.find_all("span"):
+                data_string += span.text.strip()
+          else:
+            data_string = data_section.find("section", class_="ndp_formatted_response__answer_option").text.strip()
 
           if company_name not in data_dict:
               data_dict[company_name] = {}

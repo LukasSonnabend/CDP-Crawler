@@ -1,6 +1,17 @@
 headings_to_scrape:
+  Business travel:
+    - Metric tonnes CO2e
   (C6.1) What were your organization’s gross global Scope 1 emissions in metric tons CO2e?:
     - Gross global Scope 1 emissions (metric tons CO2e)
   (C6.3) What were your organization’s gross global Scope 2 emissions in metric tons CO2e?:
     - Scope 2, location-based
     - Scope 2, market-based (if applicable)
+  # (C6.4a) Provide details of the sources of Scope 1 and Scope 2 emissions that are within your selected reporting boundary which are not included in your disclosure.:
+  #   - Source
+  Upstream transportation and distribution:
+    - Metric tonnes CO2e
+    - Evaluation status
+  Use of sold products:
+    - Metric tonnes CO2e
+  Capital goods:
+    - Metric tonnes CO2e
