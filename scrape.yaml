@@ -1,0 +1,6 @@
+headings_to_scrape:
+  (C6.1) What were your organization’s gross global Scope 1 emissions in metric tons CO2e?:
+    - Gross global Scope 1 emissions (metric tons CO2e)
+  (C6.3) What were your organization’s gross global Scope 2 emissions in metric tons CO2e?:
+    - Scope 2, location-based
+    - Scope 2, market-based (if applicable)
